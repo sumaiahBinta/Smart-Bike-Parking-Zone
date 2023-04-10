@@ -16,7 +16,7 @@ Servo myservo;
 
 int S1=0, S2=0, S3=0, S4=0;
 int flag1=0, flag2=0; 
-int slot = 4;  
+int slot = 2;  
 
 void setup(){
 Serial.begin(9600);
@@ -44,7 +44,7 @@ lcd.clear();
 
 Read_Sensor();
 
-int total = S1+S2+S3+S4;
+int total = S1+S3;
 slot = slot-total; 
 }
 
@@ -57,26 +57,26 @@ lcd.print("   Have Slot: ");
 lcd.print(slot);
 lcd.print("    ");  
 
-lcd.setCursor (0,1);
-if(S1==1){lcd.print("S1:Fill ");}
+lcd.setCursor (0,2);
+if(S1==1 && S2==1){lcd.print("S1:Fill ");}
      else{lcd.print("S1:Empty");}
 
-lcd.setCursor (10,1);
-if(S2==1){lcd.print("S2:Fill ");}
-     else{lcd.print("S2:Empty");}
-
-lcd.setCursor (0,2);
-if(S3==1){lcd.print("S3:Fill ");}
-     else{lcd.print("S3:Empty");}
+//lcd.setCursor (10,1);
+//if(S2==1){lcd.print("S2:Fill ");}
+     //else{lcd.print("S2:Empty");}
 
 lcd.setCursor (10,2);
-if(S4==1){lcd.print("S4:Fill ");}
-     else{lcd.print("S4:Empty");}
+if(S3==1 && S4==1){lcd.print("S2:Fill ");}
+     else{lcd.print("S2:Empty");}
+
+//lcd.setCursor (10,2);
+//if(S4==1){lcd.print("S4:Fill ");}
+  //   else{lcd.print("S4:Empty");}
     
 
 if(digitalRead (ir_enter) == 0 && flag1==0){
 if(slot>0){flag1=1;
-if(flag2==0){myservo.write(180); slot = slot-1;}
+if(flag2==0){myservo.write(180); slot = slot-2;}
 }else{
 lcd.setCursor (0,0);
 lcd.print(" Sorry Parking Full ");  
@@ -85,7 +85,7 @@ delay(1500);
 }
 
 if(digitalRead (ir_back) == 0 && flag2==0){flag2=1;
-if(flag1==0){myservo.write(180); slot = slot+1;}
+if(flag1==0){myservo.write(180); slot = slot+2;}
 }
 
 if(flag1==1 && flag2==1){
